@@ -159,6 +159,8 @@ class Wp_Book {
 		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_custom_post' );
 		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_custom_taxonomy_category' );
 		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_custom_taxonomy_tag' );
+		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_register_custom_table' );
+		$this->loader->add_action( 'switch_blog', $plugin_admin, 'Wp_Book_register_custom_table' );
 
 	}
 

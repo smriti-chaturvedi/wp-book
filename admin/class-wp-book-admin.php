@@ -184,5 +184,37 @@ class Wp_Book_Admin {
   	);
 		register_taxonomy('book tag', array('book'), $args);
 	}
+	
+	//Creating custom book meta table
+	public function Wp_Book_custom_table () {
+		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
+		$table_name = $wpdb->prefix . 'bookmeta';
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) {
+			$query = "CREATE TABLE ".
+								$table_name . "(
+								meta_id bigint(20) NOT NULL AUTO_INCREMENT,
+								bookmeta_id bigint(20) NOT NULL DEFAULT '0',
+								meta_key varchar(255) DEFAULT NULL,
+								meta_value longtext,
+								PRIMARY KEY (meta_id),
+								KEY bookmeta_id (bookmeta_id),
+								KEY meta_key (meta_key)
+								)" . $charset_collate . ";";
+
+								dbDelta($query);
+		}
+	}
+
+	//Registers Custom Table
+	public function Wp_Book_register_custom_table () {
+		global $wpdb;
+		$wpdb->bookmeta = $wpdb->prefix . 'bookmeta';
+		$wpdb->tables[] = 'bookmeta';
+
+		return;
+	}
 
 }
