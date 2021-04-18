@@ -125,5 +125,32 @@ class Wp_Book_Admin {
   	);
   	register_post_type( 'book', $args );
 	}
+	
+	//Create custom hierarchical taxonomy book category
+	public function Wp_Book_custom_taxonomy_category () {
+		$labels = array(
+    'name' => _x( 'Books Category', 'taxonomy general name' ),
+    'singular_name' => _x( 'Book Category', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search Books Category' ),
+    'all_items' => __( 'All Books Category' ),
+    'parent_item' => __( 'Parent Book Category' ),
+    'parent_item_colon' => __( 'Parent Book Category:' ),
+    'edit_item' => __( 'Edit Book Category' ),
+    'update_item' => __( 'Update Book Category' ),
+    'add_new_item' => __( 'Add New Book Category' ),
+    'new_item_name' => __( 'New Book Name Category' ),
+    'menu_name' => __( 'Book Category' ),
+  	);
+		$args =  array(
+    'hierarchical' => true,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_in_rest' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'book-category' ),
+		);
+		register_taxonomy('book category', array('book'), $args);
+	}
 
 }
