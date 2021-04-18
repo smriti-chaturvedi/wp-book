@@ -99,7 +99,7 @@ class Wp_Book_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-book-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-	
+
 	//Create custom book type Post
 	public function Wp_Book_custom_post () {
 		$labels = array(
@@ -125,7 +125,7 @@ class Wp_Book_Admin {
   	);
   	register_post_type( 'book', $args );
 	}
-	
+
 	//Create custom hierarchical taxonomy book category
 	public function Wp_Book_custom_taxonomy_category () {
 		$labels = array(
@@ -152,7 +152,7 @@ class Wp_Book_Admin {
 		);
 		register_taxonomy('book category', array('book'), $args);
 	}
-	
+
 	//Crate custom taxonomy book tag
 	public function Wp_Book_custom_taxonomy_tag () {
 		$labels = array(
@@ -161,8 +161,6 @@ class Wp_Book_Admin {
     'search_items' =>  __( 'Search Books Tag' ),
     'popular_items' => __( 'Popular Books Tag' ),
     'all_items' => __( 'All Books Tag' ),
-    'parent_item' => null,
-    'parent_item_colon' => null,
     'edit_item' => __( 'Edit Book Tag' ),
     'update_item' => __( 'Update Book Tag' ),
     'add_new_item' => __( 'Add New Book Tag' ),
@@ -178,13 +176,12 @@ class Wp_Book_Admin {
     'show_ui' => true,
     'show_in_rest' => true,
     'show_admin_column' => true,
-    'update_count_callback' => '_update_book_tag_count',
     'query_var' => true,
     'rewrite' => array( 'slug' => 'book-tag' ),
   	);
-		register_taxonomy('book tag', array('book'), $args);
+		register_taxonomy('book tag', 'book', $args);
 	}
-	
+
 	//Creating custom book meta table
 	public function Wp_Book_custom_table () {
 		global $wpdb;
@@ -217,4 +214,58 @@ class Wp_Book_Admin {
 		return;
 	}
 
+	//Adding Custom Meta Box
+	public function Wp_Book_add_meta_box () {
+		add_meta_box(
+			'Wp_Book_meta_id',
+			__('Book Details', 'Wp_Book'),
+			array($this, 'Wp_Book_html'),
+			'book'
+		);
+	}
+
+	//HTML for meta box
+	public function Wp_Book_html ($post) {
+		?>
+		<p>
+			<label for="author">Author Name</label>
+			<br/>
+			<input type="text" name="author" id="author" value="<?php echo esc_attr( get_post_meta( get_the_ID(), 'author', true ) ); ?>">
+		</p>
+		<p>
+			<label for="price">Price</label>
+			<br/>
+			<input type="text" name="price" id="price" value="<?php echo esc_attr( get_metadata('book', get_the_ID(), 'price', true ) ); ?>">
+		</p>
+		<p>
+			<label for="publisher">Publisher</label>
+			<br/>
+			<input type="text" name="publisher" id="publisher" value="<?php echo esc_attr( get_metadata('book', get_the_ID(), 'publisher', true ) ); ?>">
+		</p>
+		<p>
+			<label for="year">Year</label>
+			<br/>
+			<input type="text" name="year" id="year" value="<?php echo esc_attr( get_metadata('book', get_the_ID(), 'year', true ) ); ?>">
+		</p>
+		<p>
+			<label for="edition">Edition</label>
+			<br/>
+			<input type="text" name="edition" id="edition" value="<?php echo esc_attr( get_metadata('book', get_the_ID(), 'edition', true ) ); ?>">
+		</p>
+		<?php
+	}
+
+	public function Wp_Book_meta_save ($post_id) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( $parent_id = wp_is_post_revision( $post_id ) ) {
+        $post_id = $parent_id;
+    }
+		$fields=['author'];
+		//, 'price', 'publisher', 'year', 'edition'
+		foreach ($fields as $field) {
+			if ( array_key_exists( $field, $_POST ) ) {
+				update_post_meta( $post_id, $field,  sanitize_text_field( $_POST[$field] ));
+			}
+		}
+	}
 }
