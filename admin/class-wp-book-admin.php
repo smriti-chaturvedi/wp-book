@@ -436,5 +436,26 @@ class Wp_Book_Admin {
 		add_shortcode( 'book', array($this, 'Wp_Book_render_shortcode'));
 	}
 
+	//Creates Dashboard Widget
+	public function Wp_Book_custom_dashboard_widget () {
+		wp_add_dashboard_widget(
+			'Wp_Book_dashboard_id',
+			__('Top 5 Categories', 'Wp_Book domain'),
+			array($this, 'Wp_Book_find_categories')
+		);
+	}
+
+	//Finds and lists top 5 categories based on Count
+	public function Wp_Book_find_categories () {
+		$args = array(
+			'orderby' => 'count',
+			'order' => 'DESC',
+			'number' => 5,
+			'show-count' => 1,
+			'taxonomy' => 'book category'
+		);
+		wp_list_categories($args);
+	}
+
 
 }
