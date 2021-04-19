@@ -165,6 +165,7 @@ class Wp_Book {
 		$this->loader->add_action( 'save_post', $plugin_admin, 'Wp_Book_meta_save' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'Wp_Book_admin_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'Wp_Book_settings_init' );
+		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_register_shortcode' );
 
 	}
 

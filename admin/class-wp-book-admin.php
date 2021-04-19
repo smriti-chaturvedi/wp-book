@@ -340,4 +340,100 @@ class Wp_Book_Admin {
 	}
 
 
+	//Shortcode Rendering functions
+	public function Wp_Book_render_shortcode ($atts) {
+		$atts = shortcode_atts(array(
+			'book_id'   => '',
+			'author'    => '',
+			'year'		  => '',
+			'category'  => '',
+			'tag'       => '',
+			'publisher' => ''
+		), $atts);
+
+		$args = array(
+			'post_type' => 'book',
+			'post_status' => 'publish'
+		);
+
+		if( $atts[ 'author' ] != '' ) {
+			$args[ 'author' ] = $atts[ 'author' ];
+		}
+		if( $atts[ 'book_id' ] != '' ) {
+			$args[ '' ] = $atts[ 'book_id' ];
+		}
+		if( $atts[ 'category' ] != '' ) {
+			$args[ 'tax_query' ] = array(
+				array(
+					'taxonomy' => 'book category',
+          'terms' => array( $atts[ 'category' ] ),
+          'field' => 'name',
+          'operator' => 'IN'
+				),
+			);
+		}
+		if( $atts[ 'tag' ] != '' ){
+			$args[ 'tax_query' ] = array(
+				array(
+					'taxonomy' => 'book tag',
+          'terms' => array( $atts[ 'tag' ] ),
+          'field' => 'name',
+          'operator' => 'IN'
+				),
+			);
+		}
+		return $this->Wp_Book_shortcode_function( $args );
+	}
+
+	public function Wp_Book_shortcode_function( $args ) {
+		global $wpdb;
+		$Wp_Book_query = new WP_Query( $args );
+		if( $Wp_Book_query-> have_posts() ) {
+			while( $Wp_Book_query->have_posts() ) {
+				$Wp_Book_query->the_post();
+				$author = get_metadata( 'book', get_the_ID(), 'author' )[0];
+				$price = get_metadata( 'book', get_the_ID(), 'price' )[0];
+				$publisher = get_metadata( 'book', get_the_ID(), 'publisher' )[0];
+				$link = get_permalink(get_the_ID());
+				?>
+				<ul style="list-style:none;">
+					<?php
+					if( get_the_title() != '' ){
+					?>
+						<li><?php _e( 'Book Title :', 'Wp_Book domain' ) ?><a href="<?php echo $link; ?>."><?php echo get_the_title(); ?></a></li>
+					<?php
+				}
+				if( $author != '' ){
+          ?>
+          	<li><?php _e( 'Author Name :', 'Wp_Book domain' ) ?><?php echo $author; ?></li>
+          <?php
+          }
+					if( $price != '' ){
+	          ?>
+	          	<li><?php _e( 'Price :', 'Wp_Book domain' ) ?><?php echo $price; ?></li>
+	          <?php
+	          }
+						if( $publisher != '' ){
+		          ?>
+		          	<li><?php _e( 'Publisher :', 'Wp_Book domain' ) ?><?php echo $publisher; ?></li>
+		          <?php
+		          }
+					?>
+				</ul>
+				<?php
+			}
+		}
+		else {
+			?>
+				<h1><?php _e( 'Sorry no Books Found', 'Wp_Book domain' ) ?></h1>
+			<?php
+		}
+	}
+
+	//Registers Shortcode
+	public function Wp_Book_register_shortcode () {
+		add_shortcode( 'book', array($this, 'Wp_Book_render_shortcode'));
+	}
+
+
 }
