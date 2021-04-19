@@ -415,9 +415,10 @@ class Wp_Book_Admin {
 	          }
 						if( $publisher != '' ){
 		          ?>
-		          	<li><?php _e( 'Publisher :', 'Wp_Book domain' ) ?><?php echo $publisher; ?></li>
+		          	<li><?php _e( 'Publisher :', 'Wp_Book domain' ) ?><?php echo $publisher;  ?></li>
 		          <?php
 		          }
+
 					?>
 				</ul>
 				<?php
