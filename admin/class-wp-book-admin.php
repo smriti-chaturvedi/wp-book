@@ -232,6 +232,7 @@ class Wp_Book_Admin {
 		<?php
 	}
 
+	//Saving contents of meta custom box in custom table
 	public function Wp_Book_meta_save ($post_id) {
 		error_log(print_r($post_id));
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
@@ -245,4 +246,98 @@ class Wp_Book_Admin {
 			}
 		}
 	}
+
+	//Adding custom menu page
+	public function Wp_Book_admin_menu () {
+		add_menu_page(
+			__( 'Settings', 'Wp_Book domain' ),
+			__( 'Booksmenu', 'Wp_Book domain' ),
+			'manage_options',
+			'booksmenu',
+			array($this, 'Wp_Book_menu_render'),
+			'',
+			3
+		);
+	}
+
+	//Adds section and fields to settings page
+	public function Wp_Book_menu_render () {
+		?>
+	 <h1> <?php esc_html_e( 'Welcome to my custom admin page.', 'my-plugin-textdomain' ); ?> </h1>
+	 <form method="POST" action="options.php">
+	 <?php
+	 settings_fields( 'book-setting' );
+	 do_settings_sections( 'book-setting' );
+	 submit_button();
+	 ?>
+	 </form>
+	 <?php
+	}
+
+	//Registers the fields and calls the function to fill markup for settings page
+	public function Wp_Book_settings_init() {
+
+    add_settings_section(
+        'book-section',
+        __( 'Custom settings', 'Wp_Book domain' ),
+        array($this, 'Wp_Book_setting_section'),
+        'book-setting'
+    );
+
+		add_settings_field(
+		   'number_of_books',
+		   __( 'Number Of Books', 'Wp_Book domain' ),
+		   array($this, 'Wp_Book_number_markup'),
+		   'book-setting',
+		   'book-section'
+		);
+
+		register_setting( 'book-setting', 'number_of_books' );
+
+		add_settings_field(
+		   'currency',
+		   __( 'Currency', 'Wp_Book domain' ),
+		   array($this, 'Wp_Book_currency_markup'),
+		   'book-setting',
+		   'book-section'
+		);
+
+		register_setting( 'book-setting', 'currency' );
+	}
+
+
+	//Rendering callback for settings section
+	function Wp_Book_setting_section() {
+	}
+
+	//Markup for number of books
+	function Wp_Book_number_markup() {
+    ?>
+    <label for="number_of_books"><?php _e( 'Number of Books on page' ); ?></label>
+    <input type="number" id="number_of_books" name="number_of_books" value="<?php echo get_option( 'number_of_books' ); ?>">
+    <?php
+	}
+
+	//Markup for currenct
+	function Wp_Book_currency_markup() {
+		$currencies = ['INR','USD','EUR'];
+    ?>
+    <label for="currency"><?php _e( 'Currency' ); ?></label>
+    <select>
+    	<?php
+				$selected = get_option('currency');
+				foreach ($currencies as $currency) {
+					if($currency != $selected) {
+						echo '<option value="'.$currency.'">'.$currency.'</option>';
+					}
+					else {
+						echo '<option selected value="'.$currency.'">'.$currency.'</option>';
+					}
+				}
+			?>
+    </select>
+    <?php
+	}
+
+
 }

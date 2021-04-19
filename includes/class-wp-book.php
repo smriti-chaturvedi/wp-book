@@ -163,6 +163,8 @@ class Wp_Book {
 		$this->loader->add_action( 'switch_blog', $plugin_admin, 'Wp_Book_register_custom_table', 0 );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'Wp_Book_add_meta_box' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'Wp_Book_meta_save' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'Wp_Book_admin_menu' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'Wp_Book_settings_init' );
 
 	}
 
