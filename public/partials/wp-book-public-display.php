@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore
 
 /**
  * Provide a public-facing view for the plugin

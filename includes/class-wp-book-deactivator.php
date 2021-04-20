@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore
 
 /**
  * Fired during plugin deactivation
@@ -20,21 +20,21 @@
  * @subpackage Wp_Book/includes
  * @author     Smriti Chaturvedi <smriti.chaturvedi@hbwsl.com>
  */
-class Wp_Book_Deactivator
-{
+class Wp_Book_Deactivator {
 
 
 
-    /**
-     * Short Description. (use period)
-     *
-     * Long Description.
-     *
-     * @since 1.0.0
-     */
-    public static function deactivate()
-    {
 
-    }
+
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since 1.0.0
+	 */
+	public static function deactivate() {
+
+	}
 
 }

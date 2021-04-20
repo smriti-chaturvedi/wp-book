@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore
 
 /**
  * The public-facing functionality of the plugin.
@@ -20,172 +20,173 @@
  * @subpackage Wp_Book/public
  * @author     Smriti Chaturvedi <smriti.chaturvedi@hbwsl.com>
  */
-class Wp_Book_Public
-{
+class Wp_Book_Public {
 
 
 
-    /**
-     * The ID of this plugin.
-     *
-     * @since  1.0.0
-     * @access private
-     * @var    string    $plugin_name    The ID of this plugin.
-     */
-    private $plugin_name;
 
-    /**
-     * The version of this plugin.
-     *
-     * @since  1.0.0
-     * @access private
-     * @var    string    $version    The current version of this plugin.
-     */
-    private $version;
 
-    /**
-     * Initialize the class and set its properties.
-     *
-     * @since 1.0.0
-     * @param string $plugin_name The name of the plugin.
-     * @param string $version     The version of this plugin.
-     */
-    public function __construct( $plugin_name, $version )
-    {
+	/**
+	 * The ID of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string    $plugin_name    The ID of this plugin.
+	 */
+	private $plugin_name;
 
-        $this->plugin_name = $plugin_name;
-        $this->version     = $version;
+	/**
+	 * The version of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string    $version    The current version of this plugin.
+	 */
+	private $version;
 
-    }
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 1.0.0
+	 * @param string $plugin_name The name of the plugin.
+	 * @param string $version     The version of this plugin.
+	 */
+	public function __construct( $plugin_name, $version ) {
 
-    /**
-     * Register the stylesheets for the public-facing side of the site.
-     *
-     * @since 1.0.0
-     */
-    public function enqueue_styles()
-    {
+		$this->plugin_name = $plugin_name;
+		$this->version     = $version;
 
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Wp_Book_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Wp_Book_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+	}
 
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/wp-book-public.css', array(), $this->version, 'all');
+	/**
+	 * Register the stylesheets for the public-facing side of the site.
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_styles() {
 
-    }
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Wp_Book_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Wp_Book_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
 
-    /**
-     * Register the JavaScript for the public-facing side of the site.
-     *
-     * @since 1.0.0
-     */
-    public function enqueue_scripts()
-    {
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-book-public.css', array(), $this->version, 'all' );
 
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Wp_Book_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Wp_Book_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+	}
 
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/wp-book-public.js', array( 'jquery' ), $this->version, false);
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_scripts() {
 
-    }
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Wp_Book_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Wp_Book_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
 
-    // Shortcode Rendering functions
-    public function Wp_Book_render_shortcode( $atts )
-    {
-        $atts = shortcode_atts(
-            array(
-            'book_id'   => '',
-            'author'    => '',
-            'year'      => '',
-            'category'  => '',
-            'tag'       => '',
-            'publisher' => '',
-            ),
-            $atts
-        );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-book-public.js', array( 'jquery' ), $this->version, false );
 
-        $args = array(
-        'post_type'   => 'book',
-        'post_status' => 'publish',
-        );
+	}
 
-        if ($atts['author'] != '' ) {
-            $args['author'] = $atts['author'];
-        }
-        if ($atts['book_id'] != '' ) {
-            $args['p'] = $atts['book_id'];
-        }
-        if ($atts['category'] != '' ) {
-            $args['tax_query'] = array(
-            array(
-            'taxonomy' => 'book category',
-            'terms'    => array( $atts['category'] ),
-            ),
-            );
-        }
-        if ($atts['tag'] != '' ) {
-            $args['tax_query'] = array(
-            array(
-            'taxonomy' => 'book tag',
-            'terms'    => array( $atts['tag'] ),
-            ),
-            );
-        }
-        return $this->Wp_Book_shortcode_function($args);
-    }
+	/** Shortcode Rendering functions
+	 *
+	 * @param array $atts //phpcs:ignore.
+	 */
+	public function wp_book_render_shortcode( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'book_id'   => '',
+				'author'    => '',
+				'year'      => '',
+				'category'  => '',
+				'tag'       => '',
+				'publisher' => '',
+			),
+			$atts
+		);
 
-    // Function to query the database and display information
-    public function Wp_Book_shortcode_function( $args )
-    {
-        $content = '';
-        global $wpdb;
-        $Wp_Book_query = new WP_Query($args);
-        if ($Wp_Book_query->have_posts() ) {
-            while ( $Wp_Book_query->have_posts() ) {
-                $Wp_Book_query->the_post();
-                $author    = get_metadata('book', get_the_ID(), 'author')[0];
-                $price     = get_metadata('book', get_the_ID(), 'price')[0];
-                $publisher = get_metadata('book', get_the_ID(), 'publisher')[0];
-                $link      = get_permalink(get_the_ID());
-                $title     = get_the_title();
-                $content  .= '<ul>';
-                if ($title != '' ) {
-                    $title    = get_the_title();
-                    $content .= '<li>' . __('Book Title : ', 'Wp_Domain') . '<a href="' . $link . '">' . $title . '</a></li>';
-                    $content .= '<li>' . __('Author Name : ', 'Wp_Domain') . $author . '</li>';
-                    $content .= '<li>' . __('Price : ', 'Wp_Domain') . $price . '</li>';
-                    $content .= '<li>' . __('Publisher : ', 'Wp_Domain') . $publisher . '</li>';
-                    $content .= '</ul>';
-                }
-                return $content;
-            }
-        } else {
-            return '<h1>No Books Found</h1>';
-        }
-    }
+		$args = array(
+			'post_type'   => 'book',
+			'post_status' => 'publish',
+		);
 
-    // Registers Shortcode
-    public function Wp_Book_register_shortcode()
-    {
-        add_shortcode('book', array( $this, 'Wp_Book_render_shortcode' ));
-    }
+		if ( '' !== $atts['author'] ) {
+			$args['author'] = $atts['author'];
+		}
+		if ( '' !== $atts['book_id'] ) {
+			$args['p'] = $atts['book_id'];
+		}
+		if ( '' !== $atts['category'] ) {
+			$args['tax_query'] = array( //phpcs:ignore
+				array(
+					'taxonomy' => 'book category',
+					'terms'    => array( $atts['category'] ),
+				),
+			);
+		}
+		if ( '' !== $atts['tag'] ) {
+			$args['tax_query'] = array( //phpcs:ignore
+				array(
+					'taxonomy' => 'book tag',
+					'terms'    => array( $atts['tag'] ),
+				),
+			);
+		}
+		return $this->wp_book_shortcode_function( $args );
+	}
+
+	/** Function to query the database and display information
+	 *
+	 * @param array $args //phpcs:ignore.
+	 */
+	public function wp_book_shortcode_function( $args ) {
+		$content = '';
+		global $wpdb;
+		$wp_book_query = new WP_Query( $args );
+		if ( $wp_book_query->have_posts() ) {
+			while ( $wp_book_query->have_posts() ) {
+				$wp_book_query->the_post();
+				$author    = get_metadata( 'book', get_the_ID(), 'author' )[0];
+				$price     = get_metadata( 'book', get_the_ID(), 'price' )[0];
+				$publisher = get_metadata( 'book', get_the_ID(), 'publisher' )[0];
+				$link      = get_permalink( get_the_ID() );
+				$title     = get_the_title();
+				$content  .= '<ul>';
+				if ( '' !== $title ) {
+					$title    = get_the_title();
+					$content .= '<li>' . __( 'Book Title : ', 'Wp_Domain' ) . '<a href="' . $link . '">' . $title . '</a></li>';
+					$content .= '<li>' . __( 'Author Name : ', 'Wp_Domain' ) . $author . '</li>';
+					$content .= '<li>' . __( 'Price : ', 'Wp_Domain' ) . $price . '</li>';
+					$content .= '<li>' . __( 'Publisher : ', 'Wp_Domain' ) . $publisher . '</li>';
+					$content .= '</ul>';
+				}
+				return $content;
+			}
+		} else {
+			return '<h1>No Books Found</h1>';
+		}
+	}
+
+	/** Registers Shortcode */
+	public function wp_book_register_shortcode() {
+		add_shortcode( 'book', array( $this, 'wp_book_render_shortcode' ) );
+	}
 
 
 }

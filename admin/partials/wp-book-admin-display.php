@@ -1,4 +1,4 @@
-<?php
+<?php //phpcs:ignore
 
 /**
  * Provide a admin area view for the plugin

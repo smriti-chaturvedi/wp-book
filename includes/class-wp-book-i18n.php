@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore
 
 /**
  * Define the internationalization functionality
@@ -24,27 +24,27 @@
  * @subpackage Wp_Book/includes
  * @author     Smriti Chaturvedi <smriti.chaturvedi@hbwsl.com>
  */
-class Wp_Book_i18n
-{
+class Wp_Book_i18n { //phpcs:ignore
 
 
 
 
-    /**
-     * Load the plugin text domain for translation.
-     *
-     * @since 1.0.0
-     */
-    public function load_plugin_textdomain()
-    {
 
-        load_plugin_textdomain(
-            'wp-book',
-            false,
-            dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
-        );
 
-    }
+	/**
+	 * Load the plugin text domain for translation.
+	 *
+	 * @since 1.0.0
+	 */
+	public function load_plugin_textdomain() {
+
+		load_plugin_textdomain(
+			'wp-book',
+			false,
+			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+		);
+
+	}
 
 
 
