@@ -5,8 +5,8 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       https://github.com/smriti-chaturvedi-hbwsl
- * @since      1.0.0
+ * @link  https://github.com/smriti-chaturvedi-hbwsl
+ * @since 1.0.0
  *
  * @package    Wp_Book
  * @subpackage Wp_Book/admin/partials
