@@ -10,7 +10,7 @@ class Wp_Book_category_widget extends WP_Widget {
     );
 	}
 
-	// Fron End
+	// Front End
 	public function widget( $args, $instance ) {
 	    $title 		  = apply_filters( 'widget_title', $instance[ 'title' ] );
 	    $taxonomy 	= $instance[ 'taxonomy' ];

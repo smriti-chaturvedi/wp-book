@@ -380,6 +380,7 @@ class Wp_Book_Admin {
 		return $this->Wp_Book_shortcode_function( $args );
 	}
 
+	//Function to query the database and display information
 	public function Wp_Book_shortcode_function( $args ) {
 		global $wpdb;
 		$Wp_Book_query = new WP_Query( $args );
