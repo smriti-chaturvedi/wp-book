@@ -234,7 +234,6 @@ class Wp_Book_Admin {
 
 	//Saving contents of meta custom box in custom table
 	public function Wp_Book_meta_save ($post_id) {
-		error_log(print_r($post_id));
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
     if ( $parent_id = wp_is_post_revision( $post_id ) ) {
         $post_id = $parent_id;
@@ -250,8 +249,8 @@ class Wp_Book_Admin {
 	//Adding custom menu page
 	public function Wp_Book_admin_menu () {
 		add_menu_page(
-			__( 'Settings', 'Wp_Book domain' ),
-			__( 'Booksmenu', 'Wp_Book domain' ),
+			__( 'Settings', 'Wp_Book' ),
+			__( 'Booksmenu', 'Wp_Book' ),
 			'manage_options',
 			'booksmenu',
 			array($this, 'Wp_Book_menu_render'),
@@ -263,7 +262,7 @@ class Wp_Book_Admin {
 	//Adds section and fields to settings page
 	public function Wp_Book_menu_render () {
 		?>
-	 <h1> <?php esc_html_e( 'Welcome to my custom admin page.', 'my-plugin-textdomain' ); ?> </h1>
+	 <h1> <?php esc_html_e( 'Welcome to my custom admin page.', 'Wp_Book' ); ?> </h1>
 	 <form method="POST" action="options.php">
 	 <?php
 	 settings_fields( 'book-setting' );
@@ -279,14 +278,14 @@ class Wp_Book_Admin {
 
     add_settings_section(
         'book-section',
-        __( 'Custom settings', 'Wp_Book domain' ),
+        __( 'Custom settings', 'Wp_Book' ),
         array($this, 'Wp_Book_setting_section'),
         'book-setting'
     );
 
 		add_settings_field(
 		   'number_of_books',
-		   __( 'Number Of Books', 'Wp_Book domain' ),
+		   __( 'Number Of Books', 'Wp_Book' ),
 		   array($this, 'Wp_Book_number_markup'),
 		   'book-setting',
 		   'book-section'
@@ -296,7 +295,7 @@ class Wp_Book_Admin {
 
 		add_settings_field(
 		   'currency',
-		   __( 'Currency', 'Wp_Book domain' ),
+		   __( 'Currency', 'Wp_Book' ),
 		   array($this, 'Wp_Book_currency_markup'),
 		   'book-setting',
 		   'book-section'
@@ -360,15 +359,13 @@ class Wp_Book_Admin {
 			$args[ 'author' ] = $atts[ 'author' ];
 		}
 		if( $atts[ 'book_id' ] != '' ) {
-			$args[ '' ] = $atts[ 'book_id' ];
+			$args[ 'book_id' ] = $atts[ 'book_id' ];
 		}
 		if( $atts[ 'category' ] != '' ) {
 			$args[ 'tax_query' ] = array(
 				array(
 					'taxonomy' => 'book category',
-          'terms' => array( $atts[ 'category' ] ),
-          'field' => 'name',
-          'operator' => 'IN'
+          'terms' => array( $atts[ 'category' ] )
 				),
 			);
 		}
@@ -376,9 +373,7 @@ class Wp_Book_Admin {
 			$args[ 'tax_query' ] = array(
 				array(
 					'taxonomy' => 'book tag',
-          'terms' => array( $atts[ 'tag' ] ),
-          'field' => 'name',
-          'operator' => 'IN'
+          'terms' => array( $atts[ 'tag' ] )
 				),
 			);
 		}
@@ -400,22 +395,22 @@ class Wp_Book_Admin {
 					<?php
 					if( get_the_title() != '' ){
 					?>
-						<li><?php _e( 'Book Title :', 'Wp_Book domain' ) ?><a href="<?php echo $link; ?>."><?php echo get_the_title(); ?></a></li>
+						<li><?php _e( 'Book Title :', 'Wp_Book' ) ?><a href="<?php echo $link; ?>."><?php echo get_the_title(); ?></a></li>
 					<?php
 				}
 				if( $author != '' ){
           ?>
-          	<li><?php _e( 'Author Name :', 'Wp_Book domain' ) ?><?php echo $author; ?></li>
+          	<li><?php _e( 'Author Name :', 'Wp_Book' ) ?><?php echo $author; ?></li>
           <?php
           }
 					if( $price != '' ){
 	          ?>
-	          	<li><?php _e( 'Price :', 'Wp_Book domain' ) ?><?php echo $price; ?></li>
+	          	<li><?php _e( 'Price :', 'Wp_Book' ) ?><?php echo $price; ?></li>
 	          <?php
 	          }
 						if( $publisher != '' ){
 		          ?>
-		          	<li><?php _e( 'Publisher :', 'Wp_Book domain' ) ?><?php echo $publisher;  ?></li>
+		          	<li><?php _e( 'Publisher :', 'Wp_Book' ) ?><?php echo $publisher;  ?></li>
 		          <?php
 		          }
 
@@ -426,7 +421,7 @@ class Wp_Book_Admin {
 		}
 		else {
 			?>
-				<h1><?php _e( 'Sorry no Books Found', 'Wp_Book domain' ) ?></h1>
+				<h1><?php _e( 'Sorry no Books Found', 'Wp_Book' ) ?></h1>
 			<?php
 		}
 	}
@@ -440,7 +435,7 @@ class Wp_Book_Admin {
 	public function Wp_Book_custom_dashboard_widget () {
 		wp_add_dashboard_widget(
 			'Wp_Book_dashboard_id',
-			__('Top 5 Categories', 'Wp_Book domain'),
+			__('Top 5 Categories', 'Wp_Book'),
 			array($this, 'Wp_Book_find_categories')
 		);
 	}
@@ -451,7 +446,6 @@ class Wp_Book_Admin {
 			'orderby' => 'count',
 			'order' => 'DESC',
 			'number' => 5,
-			'show-count' => 1,
 			'taxonomy' => 'book category'
 		);
 		wp_list_categories($args);

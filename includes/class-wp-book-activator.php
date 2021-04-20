@@ -30,10 +30,7 @@ class Wp_Book_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		// $version = '1.0.0';
-		// $wp_book_admin = new Wp_Book_Admin('Wp_Book', $version);
-		// $wp_book_admin->Wp_Book_custom_table();
-		
+
 		global $wpdb;
 		$charset_collate = $wpdb->get_charset_collate();
 		$table_name = $wpdb->prefix . 'bookmeta';
@@ -55,6 +52,6 @@ class Wp_Book_Activator {
 		}
 
 	}
-	
+
 
 }

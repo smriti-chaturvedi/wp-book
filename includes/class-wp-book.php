@@ -122,6 +122,9 @@ class Wp_Book {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-book-public.php';
 
+		//Loads the class for custom widget
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-book-widget.php';
+
 		$this->loader = new Wp_Book_Loader();
 
 	}
@@ -168,6 +171,7 @@ class Wp_Book {
 		$this->loader->add_action( 'init', $plugin_admin, 'Wp_Book_register_shortcode' );
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'Wp_Book_custom_dashboard_widget' );
 
+
 	}
 
 	/**
@@ -183,6 +187,7 @@ class Wp_Book {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'widgets_init', $plugin_public, 'Wp_Book_load_widget' );
 
 	}
 

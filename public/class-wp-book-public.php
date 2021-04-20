@@ -99,5 +99,10 @@ class Wp_Book_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-book-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+	
+	public function Wp_Book_load_widget () {
+		$Wp_Book_widget = new Wp_Book_category_widget();
+		register_widget($Wp_Book_widget);
+	}
 
 }
