@@ -124,7 +124,7 @@ class Wp_Book_Admin {
 			'public'      => true,
 			'has_archive' => true,
 			'rewrite'     => array( 'slug' => 'book' ),
-			'taxonomies'  => array( 'book category', 'book tag' ),
+			'taxonomies'  => array( 'book-category', 'book-tag' ),
 		);
 		register_post_type( 'book', $args );
 	}
@@ -154,7 +154,7 @@ class Wp_Book_Admin {
 			'query_var'         => true,
 			'rewrite'           => array( 'slug' => 'book-category' ),
 		);
-		register_taxonomy( 'book category', array( 'book' ), $args );
+		register_taxonomy( 'book-category', array( 'book' ), $args );
 	}
 
 	/** Create custom taxonomy book tag */
@@ -184,7 +184,7 @@ class Wp_Book_Admin {
 			'update_count_callback' => '_update_generic_term_count',
 			'rewrite'               => array( 'slug' => 'book-tag' ),
 		);
-		register_taxonomy( 'book tag', 'book', $args );
+		register_taxonomy( 'book-tag', 'book', $args );
 	}
 
 	/** Registers Custom Table */
