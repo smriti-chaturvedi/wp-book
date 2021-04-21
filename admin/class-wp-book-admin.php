@@ -219,7 +219,7 @@ class Wp_Book_Admin {
 		<p>
 			<label for="price">Price</label>
 			<br />
-			<input type="text" name="price" id="price" value="<?php echo esc_attr( get_metadata( 'book', get_the_ID(), 'price', true ) ); ?>">
+			<input type="number" name="price" id="price" value="<?php echo esc_attr( get_metadata( 'book', get_the_ID(), 'price', true ) ); ?>">
 		</p>
 		<p>
 			<label for="publisher">Publisher</label>
@@ -229,7 +229,7 @@ class Wp_Book_Admin {
 		<p>
 			<label for="year">Year</label>
 			<br />
-			<input type="text" name="year" id="year" value="<?php echo esc_attr( get_metadata( 'book', get_the_ID(), 'year', true ) ); ?>">
+			<input type="number" name="year" id="year" value="<?php echo esc_attr( get_metadata( 'book', get_the_ID(), 'year', true ) ); ?>">
 		</p>
 		<p>
 			<label for="edition">Edition</label>
